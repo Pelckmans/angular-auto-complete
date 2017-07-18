@@ -85,27 +85,36 @@
             });
 
             // hide container on ENTER
-            $document.on('keydown', function (e) {
+            function onDocumentKeyDown(e) {
                 scope.$evalAsync(function () {
                     _documentKeyDown(e);
                 });
-            });
+            }
 
-            angular.element($window).on('resize', function (e) {
+            $document.on('keydown', onDocumentKeyDown);
+
+            function onWindowResize(e) {
                 scope.$evalAsync(function () {
                     ctrl.hide();
                 });
-            })
+            }
+            angular.element($window).on('resize', onWindowResize)
 
             // hide container upon CLICK outside of the dropdown rectangle region
-            $document.on('click', function (e) {
+            function onDocumentClick(e) {
                 scope.$evalAsync(function () {
                     _documentClick(e);
                 });
-            });
+            }
+            $document.on('click', onDocumentClick);
 
             // cleanup on destroy
             scope.$on('$destroy', function () {
+
+                $document.off('keydown', onDocumentKeyDown);
+                $document.off('click', onDocumentClick);
+                angular.element($window).off('resize', onWindowResize);
+
                 ctrl.empty();
                 ctrl.container.remove();
             });
