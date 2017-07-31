@@ -78,9 +78,9 @@
             });
 
             // handle key strokes
-            element.on('keydown', function (e) {
+            element.on('keyup', function (e) {
                 scope.$evalAsync(function () {
-                    _elementKeyDown(e);
+                    _elementKeyUp(e);
                 });
             });
 
@@ -119,7 +119,7 @@
                 ctrl.container.remove();
             });
 
-            function _elementKeyDown(e) {
+            function _elementKeyUp(e) {
                 var key = e.charCode || e.keyCode || 0;
 
                 if (key == KEYCODE.UPARROW) {
